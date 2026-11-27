@@ -64,9 +64,24 @@ function layoutQuery(source: { url?: string; path?: string }): string {
   return source.path ? `&path=${encodeURIComponent(source.path)}` : `&url=${encodeURIComponent(source.url ?? '')}`
 }
 
+let secret: Promise<string> | null = null
+
+/** The engine's session secret, from the desktop app's main process. Empty in
+ *  a plain browser, which therefore can't change anything. */
+export function sessionSecret(): Promise<string> {
+  secret ??= (window.studio?.pluginSession?.() ?? Promise.resolve('')).catch(() => '')
+  return secret
+}
+
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
+  const headers: Record<string, string> = { 'Content-Type': 'application/json' }
+  // The engine refuses any change without the session header (CSRF guard).
+  if (!['GET', 'HEAD'].includes((init?.method ?? 'GET').toUpperCase())) {
+    const s = await sessionSecret()
+    if (s) headers['X-Clips-Kitty-Session'] = s
+  }
   const res = await fetch(`${API_BASE}${path}`, {
-    headers: { 'Content-Type': 'application/json' },
+    headers,
     ...init
   })
   if (!res.ok) {

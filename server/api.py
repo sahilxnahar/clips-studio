@@ -35,6 +35,10 @@ from server.jobs import Worker
 # supported endpoint changes shape, never for additions.
 API_VERSION = 1
 
+# The Vite dev server, the only web origin the API answers (CORS) and the only
+# one whose requests may change things without the session header.
+DEV_ORIGINS = ("http://localhost:5173", "http://127.0.0.1:5173")
+
 # ---- request bodies ----------------------------------------------------------
 
 
@@ -695,7 +699,7 @@ def create_app(config: dict, settings_path: Path) -> FastAPI:
     app = FastAPI(title="Clips Kitty API", version="0.1")
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],  # Vite dev server
+        allow_origins=list(DEV_ORIGINS),
         allow_methods=["*"],
         allow_headers=["*"],
     )
@@ -812,6 +816,30 @@ def create_app(config: dict, settings_path: Path) -> FastAPI:
     from plugins import api as plugins_api
 
     desktop_session = plugins_api.install(app, data_dir=data_dir, config=config, app_version=app_version)
+
+    # A web page can't change anything. It can send a body-less POST to
+    # 127.0.0.1 without a preflight (CORS only hides the answer), which let any
+    # site publish "ask first" clips or resume the queue. Browsers put an
+    # Origin header on every POST/PUT/PATCH/DELETE; scripts, plugins, the SDK
+    # and the MCP server send none and are unaffected. A request from a page
+    # other than the dev server needs the session header, which a page can't
+    # add without the preflight the CORS allow-list refuses. The desktop
+    # window sends it, whatever origin Electron reports ("null" included,
+    # which a sandboxed frame can also claim).
+    from plugins import session as plugin_session
+
+    @app.middleware("http")
+    async def refuse_changes_from_web_pages(request, call_next):
+        origin = request.headers.get("origin")
+        if (request.method in ("POST", "PUT", "PATCH", "DELETE")
+                and origin is not None and origin not in DEV_ORIGINS
+                and not plugin_session.matches(desktop_session, request.headers.get(plugin_session.HEADER))):
+            from fastapi.responses import JSONResponse
+
+            return JSONResponse(status_code=403, content={"detail": (
+                f"A web page can't change Clips Kitty. Requests from {origin} need the {plugin_session.HEADER} "
+                f"header, which the desktop app sends.")})
+        return await call_next(request)
 
     # Account connections belong to the desktop engine. Watches, the UI and
     # other integrations share this service; no plugin implements OAuth.

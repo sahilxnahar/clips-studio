@@ -76,8 +76,8 @@ what actually happens when you call them.
 
 ## Security: read this before binding anything
 
-**There is no authentication. None.** Not a token, not a password, not an
-origin check.
+**There is no authentication. None.** Not a token, not a password. The one
+origin check is below: web pages can't change anything.
 
 That is a deliberate trade for a single-user desktop app on loopback, and it
 means anything that can reach the port can:
@@ -98,6 +98,13 @@ WARNING: binding 0.0.0.0 — this API has no authentication.
   where its own domain is pointed at this computer.
 - **This is not authentication.** Any program running on this computer can still
   call the API.
+
+**Web pages can't change anything.** A POST, PUT, PATCH or DELETE that carries
+an `Origin` header (every browser adds one) gets a 403 unless it comes from the
+Vite dev server or carries the `X-Clips-Kitty-Session` header, which a page
+can't add. Without this, a page you visited could send a body-less POST, such
+as `/automation/items/{id}/publish`, and publish clips you hadn't approved.
+Scripts, plugins and the MCP server send no `Origin` and are unaffected.
 
 **Exposing this to a network is not a supported configuration.** If you need
 remote access, put your own authenticated service in front of it and keep the

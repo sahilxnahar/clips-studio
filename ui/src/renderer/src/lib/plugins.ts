@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { API_BASE } from './api'
+import { API_BASE, sessionSecret } from './api'
 import type {
   CatalogResponse,
   Counting,
@@ -44,12 +44,7 @@ export function takeMarketplaceTab(): MarketplaceTab | null {
   return tab
 }
 
-let secret: Promise<string> | null = null
-
-export function sessionSecret(): Promise<string> {
-  secret ??= (window.studio?.pluginSession?.() ?? Promise.resolve('')).catch(() => '')
-  return secret
-}
+export { sessionSecret }
 
 /** Whether this window can install and change plugins (the desktop app can;
  *  the interface opened in a plain browser can't). */
