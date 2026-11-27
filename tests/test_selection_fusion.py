@@ -388,3 +388,13 @@ def test_a_match_is_scored_the_same_with_selection_2(monkeypatch):
 
     one, two, unset = match(1), match(2), match(None)
     assert two[2] == one[2] == unset[2] and key(two[0]) == key(one[0]) == key(unset[0])
+
+
+def test_percentile_rank_gives_ties_one_rank_whatever_the_cpu():
+    """Equal values share their average rank. argsort().argsort() ordered ties
+    however the sort did (NumPy's SIMD sort on Apple Silicon differs), so a
+    silent stretch could rank as the loudest moment of the video."""
+    assert fusion._pct(np.zeros(600)).tolist() == [0.5] * 600
+    assert fusion._pct(np.array([3.0, 1.0, 2.0])).tolist() == [1.0, 0.0, 0.5]
+    assert fusion._pct(np.array([0.0, 0.0, 5.0, 0.0])).tolist() == pytest.approx([1 / 3] * 2 + [1.0] + [1 / 3])
+    assert fusion._pct(np.zeros(0)).size == 0

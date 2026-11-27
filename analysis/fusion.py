@@ -709,10 +709,19 @@ def _speech_ratio(c: ClipCandidate, segments: list[Segment]) -> float:
 
 
 def _pct(x: np.ndarray) -> np.ndarray:
-    """Percentile-rank normalization to 0..1 within this video."""
+    """Percentile-rank normalization to 0..1 within this video.
+
+    Ties share their average rank. argsort().argsort() ranked equal values by
+    however the sort happened to order them, which differs by CPU (NumPy's
+    SIMD sort on Apple Silicon), so a silent or static stretch could read as
+    the most exciting part of the video. A flat signal is now 0.5 throughout.
+    """
     if x.size == 0:
         return x
-    order = x.argsort().argsort().astype(np.float32)
+    s = np.sort(x)
+    lo = np.searchsorted(s, x, side="left")
+    hi = np.searchsorted(s, x, side="right") - 1
+    order = ((lo + hi) / 2).astype(np.float32)
     return order / max(x.size - 1, 1)
 
 
@@ -983,7 +992,10 @@ def _signal_peak_windows(
     if combined.size == 0:
         return []
     cutoff = np.percentile(combined, percentile)
-    hot = combined >= cutoff
+    # Strictly above: when most of the video ties at one value the cutoff IS
+    # that value, and >= would mark every second hot -- one window over the
+    # whole video instead of the peak. A flat signal has no peaks.
+    hot = combined > cutoff
 
     # Merge consecutive/near-adjacent hot seconds into windows.
     windows: list[list[float]] = []

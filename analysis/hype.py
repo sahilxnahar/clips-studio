@@ -484,9 +484,11 @@ def _chatters_to_curve(times: list[tuple], duration: float) -> np.ndarray | None
     density = np.array([len(b) for b in bins], dtype=np.float32)
     if density.max() <= 0:
         return None
-    # Percentile-rank normalize (same convention as audio/visual signals).
-    order = density.argsort().argsort().astype(np.float32)
-    ranked = order / max(density.size - 1, 1)
+    # Percentile-rank normalize (same convention as audio/visual signals,
+    # ties sharing a rank so quiet stretches never read as hype).
+    from analysis.fusion import _pct
+
+    ranked = _pct(density)
     curve = np.repeat(ranked, BIN_SECONDS)[: int(duration) + 1]
     print(
         f"      Chat hype curve built: {len(times)} messages, "
