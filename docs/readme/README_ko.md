@@ -525,7 +525,7 @@ Creator / Social Platform  posts when the creator clicks Publish, or on a schedu
 - 편집 플러그인이 제안한 편집은 편집기에서 크리에이터의 확인을 기다립니다([단계](../../docs/developers/steps.md#suggest-edits-the-edit-step)).
 - 게시는 플러그인 단계가 아닙니다. Clips Kitty가 직접 클립을 게시하며, WoopSocial을 통해 크리에이터 본인의 계정으로 여러 사이트에 한 번에 게시할 수 있습니다([모든 플랫폼에 한 번에 게시하기](#publish-to-every-platform-at-once)). `kind: publisher`는 거부됩니다. 플러그인은 게시하지 않습니다.
 
-명령 세 개로 SDK를 설치하고, `game-events` 템플릿(가상의 게임인 Quarkbloom Arena용)으로 플러그인을 만들고, SDK가 만들어 주는 테스트 영상에서 실행해 볼 수 있습니다. Python 3.11, FFmpeg, Git이 필요합니다.
+명령 세 개로 SDK를 설치하고, `game-events` 템플릿(가상의 게임인 Quarkbloom Arena용)으로 플러그인을 만들고, SDK가 만들어 주는 테스트 영상에서 실행해 볼 수 있습니다. Python 3.14, FFmpeg, Git이 필요합니다.
 
 PowerShell (Windows):
 

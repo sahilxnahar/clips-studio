@@ -792,7 +792,7 @@ Creator / Social Platform  posts when the creator clicks Publish, or on a schedu
 
 तीन कमांड SDK इंस्टॉल करते हैं, `game-events` टेम्पलेट से एक प्लगइन बनाते हैं (Quarkbloom
 Arena के लिए, जो एक काल्पनिक गेम है) और उसे SDK के बनाए एक टेस्ट वीडियो पर चलाते हैं। इनके
-लिए Python 3.11, FFmpeg और Git चाहिए।
+लिए Python 3.14, FFmpeg और Git चाहिए।
 
 PowerShell (Windows):
 

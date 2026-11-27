@@ -761,7 +761,7 @@ Creator / Social Platform  posts when the creator clicks Publish, or on a schedu
 - النشر ليس خطوة من خطوات الإضافات: يتولى Clips Kitty نشر المقاطع بنفسه، ويمكنه عبر WoopSocial النشر على مواقع كثيرة دفعة واحدة بحساب صانع المحتوى نفسه ([النشر على كل المنصات دفعة واحدة](#publish-to-every-platform-at-once)). `kind: publisher` مرفوض: الإضافات لا تنشر.
 
 ثلاثة أوامر تثبّت حزمة SDK، وتنشئ إضافة من القالب `game-events` (للعبة Quarkbloom Arena، وهي
-لعبة خيالية)، وتشغّلها على فيديو تجريبي تصنعه الحزمة. تحتاج إلى Python 3.11 وFFmpeg وGit.
+لعبة خيالية)، وتشغّلها على فيديو تجريبي تصنعه الحزمة. تحتاج إلى Python 3.14 وFFmpeg وGit.
 
 PowerShell (على Windows):
 

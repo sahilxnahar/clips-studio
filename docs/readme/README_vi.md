@@ -786,7 +786,7 @@ Creator / Social Platform  posts when the creator clicks Publish, or on a schedu
 - Đăng bài không phải là một bước của plugin: Clips Kitty tự đăng clip, và qua WoopSocial nó có thể đăng lên nhiều trang cùng lúc bằng tài khoản của chính nhà sáng tạo ([Đăng lên mọi nền tảng cùng lúc](#publish-to-every-platform-at-once)). `kind: publisher` sẽ bị từ chối: plugin không đăng bài.
 
 Ba lệnh sau cài SDK, tạo một plugin từ mẫu `game-events` (cho Quarkbloom Arena, một game hư
-cấu) và chạy nó trên một video thử do SDK tạo ra. Chúng cần Python 3.11, FFmpeg và Git.
+cấu) và chạy nó trên một video thử do SDK tạo ra. Chúng cần Python 3.14, FFmpeg và Git.
 
 PowerShell (Windows):
 

@@ -817,7 +817,7 @@ Creator / Social Platform  posts when the creator clicks Publish, or on a schedu
 
 Üç komut SDK'yı kurar, `game-events` şablonundan (uydurma bir oyun olan Quarkbloom Arena
 için) bir eklenti oluşturur ve onu SDK'nın hazırladığı bir test videosunda çalıştırır.
-Python 3.11, FFmpeg ve Git gerekir.
+Python 3.14, FFmpeg ve Git gerekir.
 
 PowerShell (Windows):
 

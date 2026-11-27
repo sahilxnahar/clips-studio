@@ -6,7 +6,7 @@ The Clips Kitty plugin SDK is a small Python package, `clipskitty_sdk`, in [`sdk
 |---|---|
 | SDK version | `clipskitty_sdk.__version__` = `1.3.0` (`python -m clipskitty_sdk --version`; [changelog](../../sdk/python/CHANGELOG.md)) |
 | Plugin contract | `clipskitty_sdk.PLUGIN_API_VERSION` = `1` (see [Versioning](versioning.md)) |
-| Python | 3.10 or newer. Clips Kitty runs plugins on its own Python 3.11 (`clipskitty_sdk.host.APP_PYTHON`), so test on 3.11. |
+| Python | 3.10 or newer. Clips Kitty runs plugins on its own Python 3.14 (`clipskitty_sdk.host.APP_PYTHON`), so test on 3.14. |
 | Licence | MIT ([`sdk/python/LICENSE`](../../sdk/python/LICENSE)). Clips Kitty itself is AGPL-3.0-or-later; the SDK is MIT so that a plugin, app or tool built on it can use any licence its author chooses, open or closed. Using the SDK does not put your code under the AGPL. |
 | Package | `clipskitty-sdk` ([`sdk/python/pyproject.toml`](../../sdk/python/pyproject.toml)); not published to PyPI. See "Getting the SDK" below. |
 
@@ -67,7 +67,7 @@ python -m clipskitty_sdk new quarkbloom-bursts --template game-events --publishe
 python -m clipskitty_sdk new --list
 ```
 
-`new` writes a new plugin folder from a template: `clipskitty.yaml`, `src/main.py`, `README.md`, `tests/test_main.py` (using `clipskitty_sdk.testing`), `CHANGELOG.md`, `.gitignore`, `LICENSE`, `TEMPLATE-LICENSE.txt` and a GitHub workflow, `.github/workflows/clipskitty-check.yml`, that checks the plugin and runs its tests on Linux and Windows with Python 3.11. Every template is set up for Quarkbloom Arena, a made-up game, and runs as it is with `run --sample`.
+`new` writes a new plugin folder from a template: `clipskitty.yaml`, `src/main.py`, `README.md`, `tests/test_main.py` (using `clipskitty_sdk.testing`), `CHANGELOG.md`, `.gitignore`, `LICENSE`, `TEMPLATE-LICENSE.txt` and a GitHub workflow, `.github/workflows/clipskitty-check.yml`, that checks the plugin and runs its tests on Linux and Windows with Python 3.14. Every template is set up for Quarkbloom Arena, a made-up game, and runs as it is with `run --sample`.
 
 | Template | What it does |
 |---|---|
@@ -209,7 +209,7 @@ Values holding commas go in quotes: `--set "banner_region=0.30,0.10,0.40,0.10"`.
 
 The run prints `job folder: …` (a new temporary folder, kept so you can look inside it), the plugin's progress (on a terminal, one line rewritten in place), then the moments with each one's reason (`       why: ...`) and the plugin's notes. It warns when the plugin asks for `ffmpeg` and FFmpeg isn't on `PATH`, and when a moment's label isn't in the manifest's `events` (when it declares any). A run it refuses (no manifest, an unknown setting, a step the plugin doesn't offer) makes no job folder. A plugin started without a job folder (`python src/main.py`) says how to try it, and exits with 2.
 
-`python -m clipskitty_sdk validate .` runs the manifest checks the app and the registry run ([Plugin manifest](plugin-manifest.md)), with the line of `clipskitty.yaml` each problem is on; `run` runs them first and refuses a plugin that fails them. Both also warn about code that would fail on Clips Kitty's own Python (`clipskitty_sdk.lint`): syntax newer than Python 3.11, an import of anything but the standard library and `clipskitty_sdk` (Clips Kitty's own code, a module its Python leaves out or Windows lacks, a module at the plugin's root that should be in `src/`), and text files opened without `encoding=`. Files under `tests/` are skipped: they run only on your PC. `python -m clipskitty_sdk schema` prints the manifest's JSON Schema for editors.
+`python -m clipskitty_sdk validate .` runs the manifest checks the app and the registry run ([Plugin manifest](plugin-manifest.md)), with the line of `clipskitty.yaml` each problem is on; `run` runs them first and refuses a plugin that fails them. Both also warn about code that would fail on Clips Kitty's own Python (`clipskitty_sdk.lint`): syntax newer than Python 3.14, an import of anything but the standard library and `clipskitty_sdk` (Clips Kitty's own code, a module its Python leaves out or Windows lacks, a module at the plugin's root that should be in `src/`), and text files opened without `encoding=`. Files under `tests/` are skipped: they run only on your PC. `python -m clipskitty_sdk schema` prints the manifest's JSON Schema for editors.
 
 `clipskitty_sdk.manifest` offers the same in code: `load(folder)`, `validate(data)` (a report with `errors` and `warnings`), `validate_folder(folder)` (also checks the files the manifest names exist and that the folder has no symbolic links), `setting_value_problem(spec, value)` and `version_satisfies("2.0.0", ">=2.0, <3")`.
 

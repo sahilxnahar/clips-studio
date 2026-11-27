@@ -53,7 +53,7 @@ HN's submit form needs an account, so how long a title it takes wasn't checked. 
 - **In and out.** Clips Kitty starts a plugin with a job folder. Its `job.json` points to the video and the transcript, and holds the creator's settings and clip lengths. A finder writes `result.json` with moments: each has a start and an end in seconds, and can have a score from 0 to 100, a label and a reason.
 - **Which steps.** Find, understand, rate and edit are built. One plugin can find a video's moments, replacing Clips Kitty's own finding. Up to 3 can understand (their notes go to the AI that writes each clip's title, description and hashtags), and up to 3 can rate (their scores decide which clips are made). Edit plugins suggest edits that wait for the creator in the editor: up to 3 can suggest cuts, mutes, a hook title and more for each clip, and Clips Kitty doesn't put a suggestion into a clip until the creator uses it there and applies their edits. Posting isn't a plugin step: Clips Kitty posts clips itself, and through WoopSocial it can post to many sites at once on the creator's own account. `kind: publisher` is refused: plugins don't post.
 - **Trying it.** `new` makes a plugin from one of six templates, and `run --sample` runs it the way Clips Kitty would, on a 40-second test video the SDK makes with FFmpeg. The `game-events` template finds a red banner and a loud sound in that video. It is set up for Quarkbloom Arena, a made-up game.
-- **What it runs on.** Clips Kitty runs plugins on its own Python 3.11, with the standard library (minus a few modules the app leaves out) and the SDK. It can't install other packages yet.
+- **What it runs on.** Clips Kitty runs plugins on its own Python 3.14, with the standard library (minus a few modules the app leaves out) and the SDK. It can't install other packages yet.
 - **Licences.** The SDK is MIT, so a plugin can use any licence. Clips Kitty itself is AGPL-3.0-or-later.
 - **Not sandboxed.** Every plugin runs on the creator's PC with their rights, like any program; Clips Kitty doesn't sandbox it. The install screen says what it declares.
 - **Which release.** Clips Kitty 2.1.0 is the first release that runs plugins, and it comes with SDK 1.3.0.
@@ -105,7 +105,7 @@ Clips Kitty starts a plugin with a job folder. Its `job.json` points to the vide
 
 ## Try it
 
-You need Python 3.11, FFmpeg and Git. These three commands install the SDK, make a plugin from the `game-events` template, set up for Quarkbloom Arena (a made-up game), and run it on a 40-second test video the SDK makes with FFmpeg.
+You need Python 3.14, FFmpeg and Git. These three commands install the SDK, make a plugin from the `game-events` template, set up for Quarkbloom Arena (a made-up game), and run it on a 40-second test video the SDK makes with FFmpeg.
 
 PowerShell (Windows):
 
@@ -145,7 +145,7 @@ The test video has a red banner from 22 to 27 seconds and a loud sound at the sa
 ## Its limits
 
 - Clips Kitty 2.1.0 is the first release that runs plugins, and it comes with SDK 1.3.0.
-- Plugins run on Clips Kitty's own Python 3.11, with the standard library (minus a few modules the app leaves out) and the SDK. Clips Kitty can't install other packages yet. A few happen to be inside the app, numpy and OpenCV among them, and can be imported, but they aren't promised and may change with an app update.
+- Plugins run on Clips Kitty's own Python 3.14, with the standard library (minus a few modules the app leaves out) and the SDK. Clips Kitty can't install other packages yet. A few happen to be inside the app, numpy and OpenCV among them, and can be imported, but they aren't promised and may change with an app update.
 - Every plugin runs on the creator's PC with their rights, like any program; Clips Kitty doesn't sandbox it. The install screen says what it declares.
 - Plugins don't post: Clips Kitty posts clips itself. Edit plugins suggest edits that wait for the creator in the editor; Clips Kitty doesn't put a suggestion into a clip until the creator uses it there and applies their edits.
 - The SDK isn't on PyPI yet: it installs from GitHub.
@@ -243,7 +243,7 @@ It sees only that part of the screen and how loud the video is. It can't read wh
 
 ## Try it
 
-You need Python 3.11 (the Python Clips Kitty runs plugins on) and FFmpeg. In the plugin's folder, in PowerShell:
+You need Python 3.14 (the Python Clips Kitty runs plugins on) and FFmpeg. In the plugin's folder, in PowerShell:
 
 ```powershell
 py -m pip install "clipskitty-sdk[yaml,test] @ git+https://github.com/ColinGPT9/clips-studio#subdirectory=sdk/python"
@@ -273,7 +273,7 @@ In a Clips Kitty that runs plugins ([which release does](https://github.com/Coli
 
 ## Share it
 
-Push this folder to GitHub as its own repository. Its id, `your-github-name/quarkbloom-bursts`, starts with `your-github-name`: for a Marketplace listing, that must be the GitHub name that owns the repository. `.github/workflows/clipskitty-check.yml` then checks it on Linux and Windows with Python 3.11 on every push. How to get it listed in the Marketplace: [Marketplace publishing](https://github.com/ColinGPT9/clips-studio/blob/main/docs/developers/marketplace-publishing.md).
+Push this folder to GitHub as its own repository. Its id, `your-github-name/quarkbloom-bursts`, starts with `your-github-name`: for a Marketplace listing, that must be the GitHub name that owns the repository. `.github/workflows/clipskitty-check.yml` then checks it on Linux and Windows with Python 3.14 on every push. How to get it listed in the Marketplace: [Marketplace publishing](https://github.com/ColinGPT9/clips-studio/blob/main/docs/developers/marketplace-publishing.md).
 
 ## Files
 
@@ -358,7 +358,7 @@ jobs:
 
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
-          python-version: '3.11'
+          python-version: '3.14'
 
       - name: Check the tag names the SDK's version
         run: |

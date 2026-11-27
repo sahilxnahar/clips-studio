@@ -810,7 +810,7 @@ Creator / Social Platform  posts when the creator clicks Publish, or on a schedu
 
 Tres comandos instalan el SDK, crean un plugin a partir de la plantilla `game-events` (para
 Quarkbloom Arena, un juego inventado) y lo ejecutan sobre un video de prueba que genera el
-SDK. Necesitan Python 3.11, FFmpeg y Git.
+SDK. Necesitan Python 3.14, FFmpeg y Git.
 
 PowerShell (Windows):
 

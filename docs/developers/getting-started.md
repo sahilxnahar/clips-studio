@@ -1,6 +1,6 @@
 # Getting started
 
-This page takes you from nothing to a pipeline plugin Clips Kitty can run, in short steps. [Your first game pipeline](first-game-pipeline.md) does the same with every command's output, for one made-up game. You need Python 3.11, the version Clips Kitty's own Python is (any 3.10 or newer works for the SDK, but test on 3.11), FFmpeg, and Git. You never change Clips Kitty's code.
+This page takes you from nothing to a pipeline plugin Clips Kitty can run, in short steps. [Your first game pipeline](first-game-pipeline.md) does the same with every command's output, for one made-up game. You need Python 3.14, the version Clips Kitty's own Python is (any 3.10 or newer works for the SDK, but test on 3.14), FFmpeg, and Git. You never change Clips Kitty's code.
 
 The commands are shown for PowerShell on Windows (`py -m`) and for bash on macOS or Linux (`python -m`).
 

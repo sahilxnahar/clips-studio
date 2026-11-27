@@ -803,7 +803,7 @@ Creator / Social Platform  posts when the creator clicks Publish, or on a schedu
 
 Три команды устанавливают SDK, создают плагин из шаблона `game-events` (для Quarkbloom Arena,
 выдуманной игры) и запускают его на тестовом видео, которое создаёт SDK. Для них нужны
-Python 3.11, FFmpeg и Git.
+Python 3.14, FFmpeg и Git.
 
 PowerShell (Windows):
 

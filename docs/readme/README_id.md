@@ -785,7 +785,7 @@ Creator / Social Platform  posts when the creator clicks Publish, or on a schedu
 
 Tiga perintah memasang SDK, membuat plugin dari template `game-events` (untuk
 Quarkbloom Arena, sebuah game rekaan), dan menjalankannya pada video uji yang dibuat oleh SDK. Perintah-perintah ini membutuhkan
-Python 3.11, FFmpeg, dan Git.
+Python 3.14, FFmpeg, dan Git.
 
 PowerShell (Windows):
 

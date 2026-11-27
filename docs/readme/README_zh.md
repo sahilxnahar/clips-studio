@@ -525,7 +525,7 @@ Creator / Social Platform  posts when the creator clicks Publish, or on a schedu
 - 编辑插件提出的编辑建议，会在编辑器里等待创作者处理（[步骤](../../docs/developers/steps.md#suggest-edits-the-edit-step)）。
 - 发布不是插件步骤：Clips Kitty 自己发布片段，并且可以通过 WoopSocial，用创作者自己的账户一次发布到多个网站（[一次发布到所有平台](#publish-to-every-platform-at-once)）。`kind: publisher` 会被拒绝：插件不负责发布。
 
-三条命令就能安装 SDK、用 `game-events` 模板创建一个插件（针对 Quarkbloom Arena，一款虚构的游戏），并在 SDK 生成的测试视频上运行它。需要 Python 3.11、FFmpeg 和 Git。
+三条命令就能安装 SDK、用 `game-events` 模板创建一个插件（针对 Quarkbloom Arena，一款虚构的游戏），并在 SDK 生成的测试视频上运行它。需要 Python 3.14、FFmpeg 和 Git。
 
 PowerShell（Windows）：
 

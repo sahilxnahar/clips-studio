@@ -5,7 +5,7 @@ This page builds a pipeline plugin for one game, from nothing to a plugin Clips 
 > **Which Clips Kitty runs it.** Clips Kitty 2.1.0 is the first release that runs plugins, and it comes with SDK 1.3.0. Steps 1 to 6 don't need Clips Kitty: only Python, FFmpeg and Git (for step 1's install). Step 7 needs Clips Kitty 2.1.0 or later, or one run from source ([From source](../../README.md#from-source)).
 
 You need:
-- **Python 3.11**, the Python Clips Kitty runs plugins on. The SDK works on 3.10 or newer, but test on 3.11: newer Python code fails there.
+- **Python 3.14**, the Python Clips Kitty runs plugins on. The SDK works on 3.10 or newer, but test on 3.14: newer Python code fails there.
 - **FFmpeg** on `PATH`, for the sample video and for reading your recordings.
 - **Git**, to install the SDK until it is on PyPI, and to share your plugin.
 
@@ -64,7 +64,7 @@ quarkbloom-bursts/
   LICENSE                                 MIT, your licence for the plugin (change it if you like)
   TEMPLATE-LICENSE.txt                    the MIT licence of the code that came from the template
   .gitignore
-  .github/workflows/clipskitty-check.yml  checks the plugin on GitHub, on Linux and Windows, with Python 3.11
+  .github/workflows/clipskitty-check.yml  checks the plugin on GitHub, on Linux and Windows, with Python 3.14
 ```
 
 ## 3. Run it on the sample
@@ -310,7 +310,7 @@ git tag v0.1.0
 git push origin v0.1.0
 ```
 
-The workflow `new` wrote, `.github/workflows/clipskitty-check.yml`, then checks the plugin and runs its tests on every push, on Linux and Windows, with Python 3.11.
+The workflow `new` wrote, `.github/workflows/clipskitty-check.yml`, then checks the plugin and runs its tests on every push, on Linux and Windows, with Python 3.14.
 
 To list it in the Marketplace, make its listing file from the folder that holds the plugin:
 

@@ -525,7 +525,7 @@ Creator / Social Platform  posts when the creator clicks Publish, or on a schedu
 - 編集プラグインが提案した編集は、エディターでクリエイターの判断を待ちます（[ステップ](../../docs/developers/steps.md#suggest-edits-the-edit-step)）。
 - 投稿はプラグインのステップではありません。クリップの投稿は Clips Kitty 自身が行い、WoopSocial を通じてクリエイター自身のアカウントで多くのサイトにまとめて投稿できます（[すべてのプラットフォームに一度に公開する](#publish-to-every-platform-at-once)）。`kind: publisher` は拒否されます。プラグインは投稿しません。
 
-3 つのコマンドで、SDK のインストール、`game-events` テンプレート（架空のゲーム Quarkbloom Arena 用）からのプラグイン作成、SDK が作るテスト動画での実行までできます。Python 3.11、FFmpeg、Git が必要です。
+3 つのコマンドで、SDK のインストール、`game-events` テンプレート（架空のゲーム Quarkbloom Arena 用）からのプラグイン作成、SDK が作るテスト動画での実行までできます。Python 3.14、FFmpeg、Git が必要です。
 
 PowerShell（Windows）：
 

@@ -525,7 +525,7 @@ Creator / Social Platform  posts when the creator clicks Publish, or on a schedu
 - ปลั๊กอินแก้ไขจะเสนอการแก้ไขที่รอให้ครีเอเตอร์ตัดสินใจในโปรแกรมตัดต่อ ([Steps](../../docs/developers/steps.md#suggest-edits-the-edit-step))
 - การโพสต์ไม่ใช่ขั้นตอนของปลั๊กอิน: Clips Kitty โพสต์คลิปเอง และผ่าน WoopSocial มันโพสต์ไปหลายเว็บพร้อมกันได้ด้วยบัญชีของครีเอเตอร์เอง ([เผยแพร่ไปทุกแพลตฟอร์มพร้อมกัน](#publish-to-every-platform-at-once)) `kind: publisher` จะถูกปฏิเสธ: ปลั๊กอินไม่โพสต์
 
-สามคำสั่งนี้จะติดตั้ง SDK สร้างปลั๊กอินจากเทมเพลต `game-events` (สำหรับ Quarkbloom Arena ซึ่งเป็นเกมสมมติ) และรันมันกับวิดีโอทดสอบที่ SDK สร้างขึ้น ต้องมี Python 3.11, FFmpeg และ Git
+สามคำสั่งนี้จะติดตั้ง SDK สร้างปลั๊กอินจากเทมเพลต `game-events` (สำหรับ Quarkbloom Arena ซึ่งเป็นเกมสมมติ) และรันมันกับวิดีโอทดสอบที่ SDK สร้างขึ้น ต้องมี Python 3.14, FFmpeg และ Git
 
 PowerShell (Windows):
 

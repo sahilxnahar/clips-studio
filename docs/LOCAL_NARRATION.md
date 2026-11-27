@@ -11,7 +11,7 @@ than installing another desktop app or copying its implementation.
 
 ## Setup on Windows
 
-Use Python 3.11 or 3.12. Keep optional narration dependencies separate from the
+Use Python 3.11 to 3.14. Keep optional narration dependencies separate from the
 main app environment:
 
 ```powershell
