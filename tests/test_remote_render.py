@@ -532,7 +532,10 @@ def test_a_piece_shows_the_same_frames_as_the_source(tmp_path):
                     "-pix_fmt", "yuv420p", "-c:a", "aac", "-shortest", str(src)], check=True)
 
     def frame(path, t):
-        raw = subprocess.run([ff, "-v", "error", "-ss", f"{t:.3f}", "-i", str(path), "-frames:v", "1",
+        # Microseconds, not milliseconds: FFmpeg 9 can shift the piece by a
+        # non-round amount (e.g. 0.0789 s), and rounding up past a frame's pts
+        # grabs the next frame.
+        raw = subprocess.run([ff, "-v", "error", "-ss", f"{t:.6f}", "-i", str(path), "-frames:v", "1",
                               "-f", "image2pipe", "-vcodec", "png", "-"], capture_output=True).stdout
         return cv2.imdecode(np.frombuffer(raw, np.uint8), cv2.IMREAD_COLOR).astype(int)
 

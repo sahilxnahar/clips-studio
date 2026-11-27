@@ -792,7 +792,8 @@ def test_a_result_that_cant_even_be_read_is_refused_not_raised(tmp_path):
     (folder / "result.json").rmdir()
     (folder / "result.json").write_text('{"plugin_api": 1, "ranges": [], "notes": ' + "[" * 200_000
                                         + "]" * 200_000 + "}", encoding="utf-8")
-    with pytest.raises(ContractError, match=r"result\.json could not be read \(maximum recursion depth"):
+    # Python 3.14's JSON parser reports "Stack overflow" where older ones said "maximum recursion depth".
+    with pytest.raises(ContractError, match=r"result\.json could not be read \((maximum recursion depth|Stack overflow)"):
         host.read_answers(folder, steps=["rate"], ids=["m1"])
     huge = int("9" * 400)
     assert check_result({"plugin_api": 1, "ranges": [{"start": 0, "end": huge}]}) == \

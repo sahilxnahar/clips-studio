@@ -307,7 +307,8 @@ def test_a_failing_step_is_reported_and_nothing_partial_lands(data_dir, video, a
 @pytest.mark.parametrize(("mode", "logged"), [
     ("folder", "result: result.json is not a file"),
     ("huge", "result: moments[0]: score must be a number from 0 to 100, or left out"),
-    ("deep", "result: result.json could not be read (maximum recursion depth exceeded"),
+    # The parser's own wording differs by Python version (3.14: "Stack overflow").
+    ("deep", "result: result.json could not be read ("),
 ])
 def test_an_answer_that_cant_even_be_read_is_skipped_and_the_job_goes_on(data_dir, video, capsys, mode, logged):
     """result.json made a folder, a score too large for a float, notes nested

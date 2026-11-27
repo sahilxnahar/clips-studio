@@ -316,6 +316,25 @@ def test_the_cookbook_has_every_recipe_with_what_it_needs():
             assert "open(" not in line or "encoding=" in line, (title, line)
 
 
+def _within_one_level(got, want) -> bool:
+    """Equal, except brightness readings may differ by one level: FFmpeg
+    versions round the synthetic video's colour conversion differently
+    (9.x reads 54 where 8.x reads 53). Times and labels must match exactly."""
+    if len(got) != len(want):
+        return False
+    for g, w in zip(got, want):
+        if g[:3] != w[:3]:
+            return False
+        if g[3] != w[3]:
+            gs, ws = re.split(r"\d+", g[3] or ""), re.split(r"\d+", w[3] or "")
+            gn, wn = re.findall(r"\d+", g[3] or ""), re.findall(r"\d+", w[3] or "")
+            if "brightness" not in (w[3] or "") or gs != ws or len(gn) != len(wn):
+                return False
+            if any(abs(int(a) - int(b)) > 1 for a, b in zip(gn, wn)):
+                return False
+    return True
+
+
 @pytest.mark.parametrize("title", list(RECIPES))
 def test_the_cookbook_recipes_run(tmp_path, title):
     roles, code, _text = recipes()[title]
@@ -354,7 +373,7 @@ def test_the_cookbook_recipes_run(tmp_path, title):
     result = json.loads((folder / "result.json").read_text(encoding="utf-8"))
     want = RECIPES[title]
     ranges = [(r["start"], r["end"], r.get("label"), r.get("reason")) for r in result.get("ranges", [])]
-    assert ranges == want.get("ranges", [])
+    assert _within_one_level(ranges, want.get("ranges", [])), (ranges, want.get("ranges", []))
     if "notes" in want:
         assert result.get("notes") == want["notes"]
     if "context" in want:
