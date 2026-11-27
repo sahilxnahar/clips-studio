@@ -12,6 +12,8 @@ order, first hit wins:
   1. CLIPS_STUDIO_FFMPEG / CLIPS_STUDIO_FFPROBE / CLIPS_STUDIO_OLLAMA —
      explicit override, for debugging or pinning a custom build.
   2. Next to the frozen executable — where the installer puts them.
+     On macOS, Homebrew's keg-only ffmpeg-full is tried here too, since
+     the plain Homebrew ffmpeg cannot burn captions.
   3. PATH — the developer case, and any system-wide install.
 
 Falling back to the bare name (rather than raising) keeps the repo workflow
@@ -53,6 +55,10 @@ def _search_roots(folder: str) -> list[Path]:
     # A repo checkout may vendor binaries for testing a packaged layout.
     repo_vendor = Path(__file__).resolve().parent.parent / "vendor" / folder
     roots.append(repo_vendor)
+    # Homebrew's plain `ffmpeg` has no libass, so no `subtitles`/`ass` filters
+    # and captions cannot be burned. Its keg-only `ffmpeg-full` has them.
+    if folder == "ffmpeg" and sys.platform == "darwin":
+        roots += [Path(p) / "opt" / "ffmpeg-full" / "bin" for p in ("/opt/homebrew", "/usr/local")]
     return roots
 
 

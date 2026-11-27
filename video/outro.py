@@ -625,13 +625,26 @@ def _font(filename, size, expect):
     C:. Falling back silently to some default face would put the one piece of
     branding carrying the product name in the wrong type, on every clip a user
     posts, with nothing failing.
+
+    Segoe UI ships only with Windows and cannot be redistributed. Elsewhere
+    (macOS, Linux, Docker) the card uses Selawik, Microsoft's open-source
+    (OFL) metric-compatible stand-in for Segoe UI, bundled in assets/fonts.
+    The fallback is explicit and still asserted by family name.
     """
     fonts = Path(os.environ.get("WINDIR", r"C:\Windows")) / "Fonts"
+    if not (fonts / filename).is_file() and filename in _SELAWIK:
+        filename = _SELAWIK[filename]
+        fonts = Path(__file__).resolve().parent.parent / "assets" / "fonts"
+        expect = ("Selawik", expect[1])
     f = ImageFont.truetype(str(fonts / filename), size)
     family, style = f.getname()
     if (family, style) != expect:
         raise RuntimeError(f"{filename} is {family!r}/{style!r}, expected {expect}")
     return f
+
+
+# Segoe UI weight -> the matching Selawik file in assets/fonts.
+_SELAWIK = {"seguisb.ttf": "selawksb.ttf", "segoeuib.ttf": "selawkb.ttf"}
 
 
 class _Layout:

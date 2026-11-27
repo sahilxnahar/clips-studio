@@ -154,7 +154,7 @@ def test_no_module_calls_ffmpeg_by_bare_name():
 
     root = pathlib.Path(binaries.__file__).resolve().parent.parent
     offenders = []
-    skip = {"vendor", "build", "dist", "release", "data", "site", "ui", "tests", ".git"}
+    skip = {"vendor", "build", "dist", "release", "data", "site", "ui", "tests", ".git", ".venv"}
 
     for path in root.rglob("*.py"):
         if set(path.relative_to(root).parts) & skip or path.name == "binaries.py":
@@ -188,7 +188,7 @@ def test_yolo_weights_are_never_loaded_by_bare_name():
 
     root = pathlib.Path(binaries.__file__).resolve().parent.parent
     offenders = []
-    skip = {"vendor", "build", "dist", "release", "data", "site", "ui", "tests", ".git"}
+    skip = {"vendor", "build", "dist", "release", "data", "site", "ui", "tests", ".git", ".venv"}
 
     for path in root.rglob("*.py"):
         if set(path.relative_to(root).parts) & skip or path.name == "binaries.py":
