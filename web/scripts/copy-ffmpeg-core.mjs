@@ -52,9 +52,15 @@ const to = join(root, "public", "ffmpeg");
  *  them with `classWorkerURL` keeps the bundler out of it entirely, so the
  *  dynamic import survives and resolves the core at runtime.
  *
- *  Three files and no more: `worker.js` imports only `./const.js` and
- *  `./errors.js`, and both of those import nothing. They must stay flat and
- *  beside each other, because those imports are relative. */
+ *  `worker.js` imports only `./const.js` and `./errors.js`, and both of those
+ *  import nothing. They must stay flat and beside each other, because those
+ *  imports are relative.
+ *
+ *  The `FFmpeg` class itself (`index.js` -> `classes.js`, `types.js`,
+ *  `utils.js`) is served raw too and imported at runtime by lib/clip.ts.
+ *  Next 16.4's Turbopack rejects its `new Worker(new URL(classWorkerURL,
+ *  import.meta.url))` outright ("Can't resolve <dynamic>"), so bundling it is
+ *  no longer an option either. */
 const workerFrom = join(
 	root,
 	"node_modules",
@@ -63,7 +69,15 @@ const workerFrom = join(
 	"dist",
 	"esm",
 );
-const WORKER_FILES = ["worker.js", "const.js", "errors.js"];
+const WORKER_FILES = [
+	"worker.js",
+	"const.js",
+	"errors.js",
+	"index.js",
+	"classes.js",
+	"types.js",
+	"utils.js",
+];
 
 await mkdir(to, { recursive: true });
 

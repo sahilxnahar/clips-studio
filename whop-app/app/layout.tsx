@@ -41,7 +41,15 @@ export default function RootLayout({
 
 				    accentColor sky matches --cs-accent (#38bdf8), so anything
 				    frosted-ui draws agrees with the rest of the page. */}
-				<WhopApp appearance="dark" accentColor="sky">
+				{/* @whop/iframe 0.0.6 throws during render without an app id, so a
+				    fresh clone (no secrets) could no longer `npm run build`. A
+				    deployment always sets NEXT_PUBLIC_WHOP_APP_ID; the placeholder
+				    only keeps a secret-less build working, as it did before. */}
+				<WhopApp
+					appearance="dark"
+					accentColor="sky"
+					sdkOptions={{ appId: process.env.NEXT_PUBLIC_WHOP_APP_ID || "app_unset_build_only" }}
+				>
 					{children}
 				</WhopApp>
 				{/* Vercel Web Analytics: page views only, no cookies and no

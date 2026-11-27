@@ -24,7 +24,7 @@
  *  the File API, so a long VOD costs almost nothing to mount.
  */
 
-import { FFmpeg } from "@ffmpeg/ffmpeg";
+import type { FFmpeg } from "@ffmpeg/ffmpeg";
 
 /** Served from `public/ffmpeg/`, not a CDN.
  *
@@ -39,6 +39,11 @@ import { FFmpeg } from "@ffmpeg/ffmpeg";
 const CORE_PATH = "/ffmpeg/ffmpeg-core.js";
 const WASM_PATH = "/ffmpeg/ffmpeg-core.wasm";
 const WORKER_PATH = "/ffmpeg/worker.js";
+/** The FFmpeg class, served raw and imported at runtime for the same reason:
+ *  Next 16.4's Turbopack fails the build on its dynamic
+ *  `new URL(classWorkerURL, import.meta.url)`. Unbundled, `import.meta.url`
+ *  is this file's real URL, as the library expects. */
+const CLASS_PATH = "/ffmpeg/index.js";
 
 /** A fully-qualified URL on the page's own origin.
  *
@@ -103,7 +108,18 @@ export function loadFFmpeg(onLog?: (line: string) => void): Promise<FFmpeg> {
 	if (loading) return loading;
 
 	loading = (async () => {
-		const ffmpeg = new FFmpeg();
+		let ffmpeg: FFmpeg;
+		try {
+			const lib: typeof import("@ffmpeg/ffmpeg") = await import(
+				/* webpackIgnore: true */ /* turbopackIgnore: true */ asset(CLASS_PATH)
+			);
+			ffmpeg = new lib.FFmpeg();
+		} catch (e) {
+			loading = null;
+			throw new Error(
+				`The video engine could not start: ${e instanceof Error ? e.message : String(e)}`,
+			);
+		}
 
 		ffmpeg.on("log", ({ message }) => {
 			log.push(message);
