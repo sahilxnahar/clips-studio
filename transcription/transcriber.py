@@ -84,7 +84,22 @@ def _cuda12_blas(dirs: list[Path] | None = None, load=None) -> Path | None:
 
 def _on_gpu(model) -> bool:
     """Whether a loaded Whisper model runs on the GPU (CTranslate2 says)."""
-    return getattr(getattr(model, "model", None), "device", "cpu") == "cuda"
+    return getattr(getattr(model, "model", None), "device", "cpu") in ("cuda", "mps")
+
+
+def _apple_gpu() -> bool:
+    """Whether CTranslate2 can run on this Mac's GPU (Metal, Apple Silicon).
+    Its backend is marked experimental, so a failure falls back to the CPU.
+    Measured on an M5 Pro, 116 s of speech with word timings: small on the
+    CPU 7.5 s, large-v3-turbo on Metal 4.1 s, same words."""
+    if sys.platform != "darwin":
+        return False
+    try:
+        import ctranslate2
+
+        return bool(ctranslate2.get_supported_compute_types("mps"))
+    except Exception:
+        return False
 
 
 def _load_model(model_size: str, device: str):
@@ -98,6 +113,18 @@ def _load_model(model_size: str, device: str):
     # whisper_model() swaps in the bundled weights when they are present.
     def load(name: str, **kwargs):
         return WhisperModel(whisper_model(name), **kwargs)
+
+    if device in ("auto", "mps") and _apple_gpu():
+        name = "large-v3-turbo" if model_size == "auto" else model_size
+        try:
+            model = load(name, device="mps", compute_type="auto")
+            print(f"  Whisper: Apple GPU (Metal) active, model '{name}'")
+            return model
+        except Exception as e:
+            if device == "mps":
+                raise  # asked for by name: don't silently downgrade
+            print(f"  Whisper: Apple GPU unavailable ({str(e)[:90]}) — using CPU")
+            device = "cpu"
 
     if device in ("auto", "cuda") and _cuda12_blas() is None:
         if device == "cuda":
@@ -236,7 +263,8 @@ def transcribe(
         # model has loaded, so a GPU that loads can still fail here. The job
         # goes on, on the CPU, rather than failing (a cancel is not a
         # RuntimeError, and still stops it).
-        if device == "cuda" or not _on_gpu(model) or not _GPU_LIBRARY_ERROR.search(str(e)):
+        on_metal = getattr(getattr(model, "model", None), "device", "") == "mps"
+        if device in ("cuda", "mps") or not _on_gpu(model) or not (on_metal or _GPU_LIBRARY_ERROR.search(str(e))):
             raise
         print(f"\n  Whisper: the GPU failed ({str(e)[:120]}); transcribing again on the CPU")
         segments, info = _run(_load_model(model_size, "cpu"), video_path, language, hotwords)

@@ -109,6 +109,10 @@ def _load():
     from core.gpu import torch_device
 
     device = torch_device()
+    if device == "mps":
+        # Measured on an M5 Pro: identical scores, but ~10% slower on Metal
+        # than on the CPU (small sequential layers, nothing to parallelise).
+        device = "cpu"
     model, head = talkNetModel().to(device), lossAV().to(device)
 
     # The checkpoint was saved from the training wrapper, so its keys carry

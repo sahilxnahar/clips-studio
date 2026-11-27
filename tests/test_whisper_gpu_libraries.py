@@ -73,6 +73,7 @@ def whisper(monkeypatch):
             self.model = types.SimpleNamespace(device=device)
 
     monkeypatch.setitem(sys.modules, "faster_whisper", types.SimpleNamespace(WhisperModel=WhisperModel))
+    monkeypatch.setattr(transcriber, "_apple_gpu", lambda: False)  # the CUDA cases, on any machine
     return made
 
 
@@ -149,3 +150,41 @@ def test_the_gpu_asked_for_by_name_is_not_swapped_for_the_cpu(tmp_path, monkeypa
     with pytest.raises(RuntimeError, match="cublas64_12"):
         _transcribe(tmp_path, monkeypatch, [_model("cuda", fail="Library cublas64_12.dll is not found")],
                     device="cuda")
+
+
+# ---- Apple Silicon (Metal) ---------------------------------------------------------------
+
+
+def test_on_apple_silicon_whisper_runs_turbo_on_metal(whisper, monkeypatch, capsys):
+    monkeypatch.setattr(transcriber, "_apple_gpu", lambda: True)
+    names = []
+    monkeypatch.setattr(transcriber, "whisper_model", lambda name: names.append(name) or name)
+    model = transcriber._load_model("auto", "auto")
+    assert whisper == ["mps"] and names == ["large-v3-turbo"] and transcriber._on_gpu(model)
+    assert "Apple GPU (Metal) active" in capsys.readouterr().out
+
+
+def test_metal_that_will_not_load_falls_back_to_the_cpu(monkeypatch, capsys):
+    made = []
+
+    class WhisperModel:
+        def __init__(self, name, device="cpu", compute_type="auto"):
+            if device == "mps":
+                raise RuntimeError("Metal backend unavailable")
+            made.append((name, device))
+            self.model = types.SimpleNamespace(device=device)
+
+    monkeypatch.setitem(sys.modules, "faster_whisper", types.SimpleNamespace(WhisperModel=WhisperModel))
+    monkeypatch.setattr(transcriber, "_apple_gpu", lambda: True)
+    monkeypatch.setattr(transcriber, "whisper_model", lambda name: name)
+    transcriber._load_model("auto", "auto")
+    assert made == [("small", "cpu")]
+    assert "Apple GPU unavailable" in capsys.readouterr().out
+
+
+def test_metal_failing_mid_run_finishes_on_the_cpu(tmp_path, monkeypatch, capsys):
+    """Its backend is experimental, so any failure on Metal is retried on the CPU."""
+    models = [_model("mps", fail="MPSGraph execution failed"), _model("cpu")]
+    asked, texts = _transcribe(tmp_path, monkeypatch, models)
+    assert asked == ["auto", "cpu"] and texts == ["hello from the cpu"]
+    assert "transcribing again on the CPU" in capsys.readouterr().out

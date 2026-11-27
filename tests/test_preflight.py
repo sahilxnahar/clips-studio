@@ -328,6 +328,15 @@ def test_gpu_absence_is_not_blocking():
     assert check.blocking is False
 
 
+def test_an_apple_gpu_is_reported_as_working(monkeypatch):
+    from core import gpu
+
+    monkeypatch.setattr(gpu, "cuda_usable", lambda: (False, gpu.NO_GPU))
+    monkeypatch.setattr(gpu, "mps_usable", lambda: True)
+    check = preflight.check_gpu()
+    assert check.ok is True and check.detail == "Apple GPU (Metal)" and check.blocking is False
+
+
 def test_disk_is_not_blocking(tmp_path):
     check = preflight.check_disk(tmp_path)
     assert check.blocking is False

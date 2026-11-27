@@ -188,12 +188,11 @@ def _model(name: str):
             from ultralytics import YOLO
 
             from core.binaries import yolo_weights
-            from core.gpu import cuda_usable
+            from core.gpu import torch_device
 
             model = YOLO(yolo_weights(name))
-            usable, _reason = cuda_usable()
-            if usable:
-                model.to("cuda")
+            if torch_device() != "cpu":
+                model.to(torch_device())
             _models[name] = model
         return _models[name]
 

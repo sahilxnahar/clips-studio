@@ -210,6 +210,7 @@ def test_too_old_and_too_new_are_told_apart(monkeypatch):
 def test_torch_device_follows_usability(monkeypatch):
     from core import gpu
 
+    monkeypatch.setattr(gpu, "mps_usable", lambda: False)  # the CUDA cases, on any machine
     monkeypatch.setattr(gpu, "_DEVICE", None)
     _patch(monkeypatch, _FakeCuda(available=True, archs=SHIPPED, capability=(6, 1)))
     assert gpu.torch_device() == "cpu"
@@ -281,3 +282,23 @@ def test_device_choice_goes_through_core_gpu():
     assert not offenders, (
         "use core.gpu.torch_device() instead — is_available() is true for a "
         f"card this build has no kernels for: {offenders}")
+
+
+def test_apple_silicon_gets_the_mps_device_and_use_cpu_overrides_it(monkeypatch):
+    from core import gpu
+
+    monkeypatch.setattr(gpu, "_DEVICE", None)
+    monkeypatch.setattr(gpu, "cuda_usable", lambda: (False, gpu.NO_GPU))
+    monkeypatch.setattr(gpu, "mps_usable", lambda: True)
+    assert gpu.torch_device() == "mps"
+    gpu.use_cpu()   # a GPU that failed its first inference
+    assert gpu.torch_device() == "cpu"
+
+
+def test_cuda_still_wins_over_mps(monkeypatch):
+    from core import gpu
+
+    monkeypatch.setattr(gpu, "_DEVICE", None)
+    monkeypatch.setattr(gpu, "cuda_usable", lambda: (True, "RTX"))
+    monkeypatch.setattr(gpu, "mps_usable", lambda: True)
+    assert gpu.torch_device() == "cuda"

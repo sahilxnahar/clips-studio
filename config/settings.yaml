@@ -48,7 +48,7 @@ llm:
 whisper:
   model: auto           # auto = large-v3-turbo on GPU, small on CPU. Or force:
                         # tiny / base / small / medium / large-v3 / large-v3-turbo
-  device: auto          # cuda if available, else cpu
+  device: auto          # cuda (NVIDIA) or mps (Apple Silicon) if available, else cpu
 
 # Where transcription runs. "local" is Whisper on this PC (the settings above),
 # the default. Or send the audio, on YOUR OWN API key, to a provider that
@@ -119,9 +119,10 @@ video:
   encoder: auto          # auto = first working GPU encoder (NVIDIA nvenc /
                          # AMD amf / Intel qsv), else CPU. Or force one:
                          # "nvenc" / "amf" / "qsv" / "cpu"
-  parallel_renders: 3    # clips rendered at once (one's GPU tracking overlaps
-                         # another's NVENC encode). Sized for ~6 CPU cores /
-                         # 16GB RAM; raise only with more RAM + spare VRAM.
+  parallel_renders: auto # clips rendered at once (one's GPU tracking overlaps
+                         # another's encode). auto = one per 3 CPU cores and
+                         # per 8 GB RAM, 3 to 8 (6-core/16 GB: 3; 18-core/64 GB:
+                         # 6). Or a number.
 
 tracking:
   detector: yolov8n-pose.pt  # pose model: head keypoints (nose/eyes/ears) give

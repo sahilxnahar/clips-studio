@@ -235,9 +235,14 @@ def check_whisper(configured: str) -> Check:
 def check_gpu() -> Check:
     """Not blocking: the app works on CPU, just slowly. Worth saying so
     plainly rather than letting someone conclude it's broken."""
-    from core.gpu import NO_GPU, cuda_usable, gpu_too_old
+    from core.gpu import NO_GPU, cuda_usable, gpu_too_old, mps_usable
 
     usable, reason = cuda_usable()
+
+    # Apple Silicon: tracking, audio and Whisper run on its GPU (Metal), which
+    # shares the machine's memory rather than having VRAM of its own.
+    if not usable and reason == NO_GPU and mps_usable():
+        return Check(name="gpu", ok=True, blocking=False, detail="Apple GPU (Metal)")
 
     if usable:
         try:

@@ -172,7 +172,9 @@ def process_longform(url: str, config: dict, db: StateDB, options: dict) -> None
     content_lang = forced_lang if forced_lang != "auto" else detected_language(
         video.video_id, data_dir / "transcripts"
     )
-    workers = max(1, int(config.get("video", {}).get("parallel_renders", 2)))
+    from core.pipeline import render_workers
+
+    workers = render_workers(config)
     done_count = 0
     made = []   # this run's clips, re-rendered ones too, for a match's reels
     made_seconds: dict = {}   # each clip's file's length before its card, for its reels

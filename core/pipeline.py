@@ -9,6 +9,7 @@ reprocessed, and the clips table's UNIQUE constraint blocks duplicates.
 
 import json
 import math
+import os
 import re
 import threading
 from pathlib import Path
@@ -91,6 +92,22 @@ def _render_failure_reason(err: Exception) -> str:
     lines = [ln.strip() for ln in text.splitlines() if ln.strip()]
     lines = [ln for ln in lines if not ln.endswith(":")] or lines
     return (lines[-1] if lines else "unknown error")[:300]
+
+
+def render_workers(config: dict) -> int:
+    """Clips rendered at once: video.parallel_renders, or for "auto" one per
+    three cores and per 8 GB of RAM, at least 3 (what a 6-core, 16 GB PC was
+    tuned to) and at most 8. An 18-core, 64 GB Mac gets 6."""
+    value = (config.get("video") or {}).get("parallel_renders", "auto")
+    if str(value).strip().lower() != "auto":
+        return max(1, int(value))
+    try:
+        import psutil
+
+        ram_gb = psutil.virtual_memory().total / 2**30
+    except Exception:
+        ram_gb = 16.0
+    return max(3, min((os.cpu_count() or 6) // 3, int(ram_gb // 8), 8))
 
 
 def _share_the_cpu(workers: int) -> None:
@@ -724,7 +741,7 @@ def process_video(url: str, config: dict, db: StateDB, force: bool = False) -> l
     # on this thread — sqlite connections are not shareable across threads.
     from concurrent.futures import ThreadPoolExecutor, as_completed
 
-    workers = max(1, int(config.get("video", {}).get("parallel_renders", 2)))
+    workers = render_workers(config)
     if modes.needs_framing(config):
         # Only the tracked render pipes frames through OpenCV/torch; a
         # Vertical Live render is FFmpeg alone and needs neither loaded.

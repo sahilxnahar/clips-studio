@@ -17,6 +17,11 @@ import os
 import sys
 from pathlib import Path
 
+# On Apple Silicon the models run on the GPU (core/gpu.py); an operation Metal
+# lacks then runs on the CPU instead of failing. Read when PyTorch loads, so
+# it is set before anything imports it.
+os.environ.setdefault("PYTORCH_ENABLE_MPS_FALLBACK", "1")
+
 
 def _force_utf8_io() -> None:
     """Print UTF-8 no matter who started us.

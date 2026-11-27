@@ -124,7 +124,7 @@ Package map in `remote_render/__init__.py:1-23`. User doc `docs/REMOTE-RENDERING
 - Sports framing: `_sport_framing(clip_path, config, sport_name) -> dict|None` returns a tracking dict (`core/pipeline.py:1550`).
 - Podcast: §1.
 - Outro: `clips.outro` config (default on, `config/settings.yaml:71`), appended by `outro.finish` in `_render_files` (`core/pipeline.py:1446`) and as the last concat part in longform `assemble`.
-- Config knobs: `video.encoder`, `video.parallel_renders` (default 3), `tracking.detector` (`yolov8n-pose.pt`), `tracking.sample_fps` (8), `clips.vertical/captions/outro` (`config/settings.yaml:60-129`).
+- Config knobs: `video.encoder`, `video.parallel_renders` (default auto: 3 to 8 by cores and RAM), `tracking.detector` (`yolov8n-pose.pt`), `tracking.sample_fps` (8), `clips.vertical/captions/outro` (`config/settings.yaml:60-129`).
 
 ## 10. HTTP surface relevant to video (all on `127.0.0.1:8765`, no auth — `remote_render/gateway.py:3-4`)
 

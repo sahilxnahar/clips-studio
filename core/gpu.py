@@ -118,8 +118,20 @@ def cuda_usable() -> tuple[bool, str]:
         return False, f"could not check the GPU ({type(e).__name__})"
 
 
+def mps_usable() -> bool:
+    """Whether PyTorch can run on an Apple Silicon GPU (Metal). Measured on an
+    M5 Pro: YOLO tracking 66 -> 181 frames/s against the CPU. Operations Metal
+    lacks fall back to the CPU (PYTORCH_ENABLE_MPS_FALLBACK, set in main.py)."""
+    try:
+        import torch
+
+        return bool(torch.backends.mps.is_available())
+    except Exception:
+        return False
+
+
 def torch_device() -> str:
-    """`"cuda"` or `"cpu"` — the device every model and inference call must use.
+    """`"cuda"`, `"mps"` or `"cpu"` — the device every model and inference call must use.
 
     Exists because "don't move the model to CUDA" turned out not to be enough.
     Ultralytics rebuilds its predictor on each call with
@@ -138,5 +150,13 @@ def torch_device() -> str:
     global _DEVICE
     if _DEVICE is None:
         usable, _ = cuda_usable()
-        _DEVICE = "cuda" if usable else "cpu"
+        _DEVICE = "cuda" if usable else ("mps" if mps_usable() else "cpu")
     return _DEVICE
+
+
+def use_cpu() -> None:
+    """Send every later torch_device() call to the CPU: a GPU that loaded but
+    failed its first inference. Moving one model back isn't enough, because
+    callers pass torch_device() to every predict()."""
+    global _DEVICE
+    _DEVICE = "cpu"

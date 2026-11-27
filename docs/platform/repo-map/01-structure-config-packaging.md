@@ -178,7 +178,7 @@ website's download buttons name the version").
 | `clips` | `min_score: 55`, `max_clips_per_video: 0`, `min_duration: 10`, `max_duration: 60`, `vertical: true`, `captions: true`, `outro: true` | per-job overrides arrive in `JobIn` (`server/api.py:38-60`) |
 | `scoring` | `weights {text .30, visual .20, reaction .20, audio .20, engagement .10}`, `signal_peak_percentile: 85`, `creator_context_max: 6`, `action_bonus: 10`, `audience_bonus: 8`, `rerank_pool: 8`, `reaction_top_k: 8` | fusion knobs (`docs/EXTENDING.md` "Tune before you code") |
 | `analysis` | `max_overlap .4`, `max_text_similarity .7`, `max_segment_reuse .4`, `chunk_seconds 300`, `chunk_overlap_seconds 45`, `long_video_threshold_seconds 420` | |
-| `video` | `encoder: auto`, `parallel_renders: 3` | `nvenc/amf/qsv/cpu` |
+| `video` | `encoder: auto`, `parallel_renders: auto` | `nvenc/amf/qsv/cpu` |
 | `tracking` | `detector: yolov8n-pose.pt`, `sample_fps: 8` | resolved via `core.binaries.yolo_weights()` |
 | `upload` | `daily_limit: 6`, `client_secret: config/client_secret.json` | CLI daemon; path resolved by `core.paths.resolve_config_file()` |
 | `feedback` | `relay_url: https://clips-studio-feedback.clipsstudio.workers.dev` | empty = save reports to file |
