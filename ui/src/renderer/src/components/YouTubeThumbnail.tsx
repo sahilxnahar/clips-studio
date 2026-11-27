@@ -1,3 +1,4 @@
+import type { JSX } from 'react'
 import { useMemo, useState } from 'react'
 import { api } from '../lib/api'
 import { t } from '../lib/i18n'

@@ -395,7 +395,14 @@ function startBackend(): void {
     })
   } else if (process.env.BACKEND_EXTERNAL !== '1') {
     const repoRoot = join(app.getAppPath(), '..')
-    backend = spawn('python', ['main.py', 'serve', '--port', String(API_PORT)], {
+    // Prefer the repo's virtualenv: on macOS a bare `python` is often a
+    // system interpreter without the engine's packages.
+    const venvPython =
+      process.platform === 'win32'
+        ? join(repoRoot, '.venv', 'Scripts', 'python.exe')
+        : join(repoRoot, '.venv', 'bin', 'python')
+    const python = existsSync(venvPython) ? venvPython : 'python'
+    backend = spawn(python, ['main.py', 'serve', '--port', String(API_PORT)], {
       cwd: repoRoot,
       stdio: 'inherit',
       env: backendEnv
@@ -769,8 +776,8 @@ ipcMain.handle('open-external', (_event, url: unknown) => {
 // sitting on the clipboard is never readable from the page.
 const KEY_SHAPE = /^[A-Za-z0-9_\-.]{20,200}$/
 
-ipcMain.handle('read-clipboard-key', () => {
-  const text = clipboard.readText().trim()
+ipcMain.handle('read-clipboard-key', async () => {
+  const text = (await clipboard.readText()).trim()
   return KEY_SHAPE.test(text) ? text : ''
 })
 

@@ -1,3 +1,4 @@
+import type { JSX } from 'react'
 import { useEffect, useState } from 'react'
 import { api, errorText } from '../lib/api'
 import { discord, type Destination } from '../lib/campaigns'

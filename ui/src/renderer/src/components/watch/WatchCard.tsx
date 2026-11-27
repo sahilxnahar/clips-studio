@@ -1,3 +1,4 @@
+import type { JSX } from 'react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { api, errorText } from '../../lib/api'
 import type { AutomationStatus, Watch, WatchCreator, WatchItem } from '../../lib/types'

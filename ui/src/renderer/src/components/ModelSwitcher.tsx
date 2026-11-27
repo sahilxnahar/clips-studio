@@ -1,3 +1,4 @@
+import type { JSX } from 'react'
 import { useEffect, useState } from 'react'
 import { api } from '../lib/api'
 import { openAISetup } from '../lib/aiSetup'

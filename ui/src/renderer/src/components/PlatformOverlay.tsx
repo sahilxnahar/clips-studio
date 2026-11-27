@@ -1,3 +1,4 @@
+import type { JSX } from 'react'
 /** What TikTok, Instagram Reels and YouTube Shorts draw over a Short, for the
  *  layout editor's preview: the top bar, the column of buttons down the right,
  *  the name, caption and sound at the bottom.

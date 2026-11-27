@@ -1,3 +1,4 @@
+import type { JSX } from 'react'
 import { useState } from 'react'
 import { streamWorkflows, twitchVodId, type RecordedNominationStream } from '../lib/connectedAccounts'
 import { t } from '../lib/i18n'

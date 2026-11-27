@@ -1,3 +1,4 @@
+import type { JSX } from 'react'
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import Assistant from '../components/Assistant'
 import NoClipsExplanation from '../components/NoClipsExplanation'

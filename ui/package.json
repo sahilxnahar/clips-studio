@@ -15,21 +15,21 @@
     "package": "electron-vite build && electron-builder --win"
   },
   "dependencies": {
-    "electron-updater": "^6.8.9",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "electron-updater": "^6.8.11",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "^4.3.3",
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
-    "@vitejs/plugin-react": "^4.3.1",
-    "electron": "^31.0.0",
-    "electron-builder": "^24.13.3",
-    "electron-vite": "^2.3.0",
-    "tailwindcss": "^4.0.0",
-    "typescript": "^5.5.3",
-    "vite": "^5.3.3"
+    "@tailwindcss/vite": "^4.3.5",
+    "@types/react": "^19.3.3",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.3.0",
+    "electron": "^45.5.0",
+    "electron-builder": "^26.18.0",
+    "electron-vite": "^6.0.0",
+    "tailwindcss": "^4.3.5",
+    "typescript": "^7.0.2",
+    "vite": "^8.4.0"
   },
   "overrides": {
     "tar": "^7.5.22"

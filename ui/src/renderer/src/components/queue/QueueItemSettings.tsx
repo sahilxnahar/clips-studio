@@ -1,3 +1,4 @@
+import type { JSX } from 'react'
 import { useEffect, useRef, useState } from 'react'
 import { api } from '../../lib/api'
 import type { CaptionStyle, JobOptions, PipelineChoice, SportOption } from '../../lib/types'

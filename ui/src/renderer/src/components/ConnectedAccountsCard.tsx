@@ -1,3 +1,4 @@
+import type { JSX } from 'react'
 import { useCallback, useEffect, useRef, useState, type ChangeEvent } from 'react'
 import { api } from '../lib/api'
 import {

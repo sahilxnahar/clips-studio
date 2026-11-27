@@ -1,3 +1,4 @@
+import type { JSX } from 'react'
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { api } from '../lib/api'
 import { t } from '../lib/i18n'
@@ -233,7 +234,7 @@ export default function TimelineEditor({
   tabRequest
 }: {
   clip: Clip
-  videoRef: React.RefObject<HTMLVideoElement>
+  videoRef: React.RefObject<HTMLVideoElement | null>
   onChanged: () => void
   onPreview: (url: string | null) => void
   onLiveOverlay: (o: LiveOverlay | null) => void

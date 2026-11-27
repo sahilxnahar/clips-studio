@@ -1,3 +1,4 @@
+import type { JSX } from 'react'
 import { t } from '../../lib/i18n'
 import type { InstalledPlugin } from '../../lib/marketplace'
 import { MAX_PER_STEP, usableFor, type JobStep } from '../../lib/steps'

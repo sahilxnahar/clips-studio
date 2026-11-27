@@ -1,3 +1,4 @@
+import type { JSX } from 'react'
 import type { FilterName } from '../lib/types'
 import { t } from '../lib/i18n'
 

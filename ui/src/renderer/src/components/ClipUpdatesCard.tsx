@@ -1,3 +1,4 @@
+import type { JSX } from 'react'
 import { t } from '../lib/i18n'
 import { useCallback, useEffect, useState } from 'react'
 import { api, errorText } from '../lib/api'

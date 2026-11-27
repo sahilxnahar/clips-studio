@@ -1,3 +1,4 @@
+import type { JSX } from 'react'
 import { t } from '../lib/i18n'
 import { stepRunText } from '../lib/steps'
 import type { RunOutcome } from '../lib/types'

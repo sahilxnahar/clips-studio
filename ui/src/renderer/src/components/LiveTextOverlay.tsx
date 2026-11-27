@@ -1,3 +1,4 @@
+import type { JSX } from 'react'
 import { useEffect, useRef, useState } from 'react'
 import type { LiveOverlay } from '../lib/types'
 import { bakedToOrig } from './TimelineEditor'
@@ -14,7 +15,7 @@ export default function LiveTextOverlay({
   videoRef,
   overlay
 }: {
-  videoRef: React.RefObject<HTMLVideoElement>
+  videoRef: React.RefObject<HTMLVideoElement | null>
   overlay: LiveOverlay | null
 }): JSX.Element | null {
   const boxRef = useRef<HTMLDivElement>(null)

@@ -1,3 +1,4 @@
+import type { JSX } from 'react'
 import { t } from '../lib/i18n'
 import type { SportReport } from '../lib/types'
 

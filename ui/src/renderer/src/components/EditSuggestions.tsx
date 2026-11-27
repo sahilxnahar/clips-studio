@@ -1,3 +1,4 @@
+import type { JSX } from 'react'
 import type { SuggestionCard } from '../lib/editSuggestions'
 import { t } from '../lib/i18n'
 

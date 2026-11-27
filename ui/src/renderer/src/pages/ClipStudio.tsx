@@ -1,3 +1,4 @@
+import type { JSX } from 'react'
 import { t } from '../lib/i18n'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import NoClipsExplanation from '../components/NoClipsExplanation'

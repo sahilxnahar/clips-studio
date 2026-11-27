@@ -1,3 +1,4 @@
+import type { JSX } from 'react'
 import { useEffect, useState } from 'react'
 import type { CaptionStyle } from '../lib/types'
 import { t } from '../lib/i18n'

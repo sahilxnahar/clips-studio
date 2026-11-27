@@ -1,3 +1,4 @@
+import type { JSX } from 'react'
 import { useEffect, useRef, useState } from 'react'
 import { applyEvent, emptyProgress, etaSeconds, formatEta, progressStore } from '../lib/jobProgress'
 import { api } from '../lib/api'

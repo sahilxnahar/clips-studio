@@ -1,3 +1,4 @@
+import type { JSX } from 'react'
 import { openAISetup } from '../lib/aiSetup'
 import { t } from '../lib/i18n'
 

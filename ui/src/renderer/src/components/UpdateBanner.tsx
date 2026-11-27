@@ -1,3 +1,4 @@
+import type { JSX } from 'react'
 import { useEffect, useState } from 'react'
 
 /** "813 MB" or "6.2 GB": update downloads span both. */

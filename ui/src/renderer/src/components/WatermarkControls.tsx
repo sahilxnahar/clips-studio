@@ -1,3 +1,4 @@
+import type { JSX } from 'react'
 import { api } from '../lib/api'
 import { CAPTION_FONTS } from './CaptionStyleControls'
 import { Folder, Rotate } from './icons'

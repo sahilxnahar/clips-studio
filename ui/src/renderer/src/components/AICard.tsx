@@ -1,3 +1,4 @@
+import type { JSX } from 'react'
 import { useEffect, useRef, useState } from 'react'
 import { api, errorText } from '../lib/api'
 import { clearAISetupHint, peekAISetupHint } from '../lib/aiSetup'

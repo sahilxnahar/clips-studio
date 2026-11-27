@@ -1,3 +1,4 @@
+import type { JSX } from 'react'
 /** Score badge tinting from sky (high) through blue-grey (low). */
 export default function ScoreBadge({ score }: { score: number }): JSX.Element {
   const cls =

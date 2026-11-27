@@ -1,3 +1,4 @@
+import type { JSX } from 'react'
 import { useEffect, useState } from 'react'
 import { api } from '../lib/api'
 import type { CaptionLine, CaptionStyle, Clip } from '../lib/types'

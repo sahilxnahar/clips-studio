@@ -1,3 +1,4 @@
+import type { JSX } from 'react'
 import { useState } from 'react'
 import { t } from '../lib/i18n'
 import { gitSource } from '../lib/marketplace'

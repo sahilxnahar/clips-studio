@@ -1,3 +1,4 @@
+import type { JSX } from 'react'
 import { platformLabel } from '../../lib/uploadpost'
 import { t } from '../../lib/i18n'
 

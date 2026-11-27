@@ -1,3 +1,4 @@
+import type { JSX } from 'react'
 import { useEffect, useState } from 'react'
 import { connectedAccounts } from '../lib/connectedAccounts'
 import { t } from '../lib/i18n'

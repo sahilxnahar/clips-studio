@@ -1,3 +1,4 @@
+import type { JSX } from 'react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { api } from '../lib/api'
 import type { QueueJob, QueueSnapshot, StudioEvent } from '../lib/types'

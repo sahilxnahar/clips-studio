@@ -1,3 +1,4 @@
+import type { JSX } from 'react'
 import { t } from '../lib/i18n'
 import { ratedOutNames } from '../lib/steps'
 import type { RunOutcome } from '../lib/types'

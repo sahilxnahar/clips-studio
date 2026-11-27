@@ -1,3 +1,4 @@
+import type { JSX } from 'react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { AwayToggle } from '../components/ApprovalCard'
 import { api, errorText } from '../lib/api'

@@ -1,3 +1,4 @@
+import type { JSX } from 'react'
 /** Tiny inline SVG icon set — one visual language across the editor instead
  *  of mixed-weight emoji. Stroke-based, inherits currentColor, no external
  *  dependency (the CSP blocks remote assets anyway). */

@@ -1,3 +1,4 @@
+import type { JSX } from 'react'
 import { useEffect, useState } from 'react'
 import { api } from '../lib/api'
 import type { Adjust, Clip } from '../lib/types'
@@ -43,7 +44,7 @@ export default function ColorControls({
   onChanged
 }: {
   clip: Clip
-  videoRef: React.RefObject<HTMLVideoElement>
+  videoRef: React.RefObject<HTMLVideoElement | null>
   onChanged: () => void
 }): JSX.Element {
   const renderedFilter = clip.render_opts?.filter ?? 'none'
