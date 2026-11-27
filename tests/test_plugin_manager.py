@@ -938,8 +938,8 @@ def test_a_subfolder_that_cant_be_opened_is_named(data, plugin_source, monkeypat
 
 
 def test_a_windows_junction_counts_as_a_link_on_every_python(tmp_path, monkeypatch):
-    """Path.is_junction only exists from Python 3.12; the app builds with
-    3.11. A junction's reparse tag is the mount-point one; other reparse
+    """Path.is_junction only exists from Python 3.12, and the check must not
+    depend on it. A junction's reparse tag is the mount-point one; other reparse
     points (OneDrive's placeholders) are ordinary files."""
     import types
 

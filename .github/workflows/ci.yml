@@ -31,7 +31,7 @@ jobs:
 
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
-          python-version: '3.11'
+          python-version: '3.14'
 
       - name: Compile every module
         # Catches syntax errors across the whole engine in seconds, without
@@ -109,7 +109,7 @@ jobs:
 
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
-          python-version: '3.11'
+          python-version: '3.14'
 
       - name: Install what these tests need
         run: >-
@@ -132,7 +132,7 @@ jobs:
     name: SDK (Windows)
     runs-on: windows-latest
     # The SDK's own tests on Windows, where Clips Kitty runs, with Clips
-    # Kitty's Python (3.11) and nothing but pytest and PyYAML: the files
+    # Kitty's Python (3.14) and nothing but pytest and PyYAML: the files
     # named tests/test_plugin_sdk_*.py import nothing from the engine
     # (test_plugin_sdk_package.py checks). This runner has no FFmpeg, so the
     # tests that need it skip here and run in the Plugin platform job.
@@ -141,7 +141,7 @@ jobs:
 
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
-          python-version: '3.11'
+          python-version: '3.14'
 
       - name: Install what these tests need
         run: pip install --quiet pytest "PyYAML>=6.0.3,<7"

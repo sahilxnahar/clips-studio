@@ -196,12 +196,12 @@ def test_the_build_refuses_another_python():
     from clipskitty_sdk.host import APP_PYTHON
 
     build = _build_installer()
-    assert APP_PYTHON == (3, 11)
+    assert APP_PYTHON == (3, 14)
     assert build.python_problem((3, 12, 0)) == (
-        "This build uses Python 3.12, but Clips Kitty's plugins are promised Python 3.11 (APP_PYTHON in "
-        "sdk/python/clipskitty_sdk/host.py). Build with 3.11, or change APP_PYTHON and the docs that name it.")
-    assert build.python_problem((3, 11, 9)) is None
-    assert build.python_problem((3, 11, 0, "final", 0)) is None
+        "This build uses Python 3.12, but Clips Kitty's plugins are promised Python 3.14 (APP_PYTHON in "
+        "sdk/python/clipskitty_sdk/host.py). Build with 3.14, or change APP_PYTHON and the docs that name it.")
+    assert build.python_problem((3, 14, 9)) is None
+    assert build.python_problem((3, 14, 0, "final", 0)) is None
     check = build.SCRIPT_MODE_CHECK
     assert "from clipskitty_sdk.host import APP_PYTHON" in check
     assert "assert tuple(sys.version_info[:2]) == tuple(APP_PYTHON)" in check

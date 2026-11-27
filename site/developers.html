@@ -204,7 +204,7 @@
                 "name": "Which Python do plugins run on?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "Clips Kitty's own: Python 3.11, with the standard library (except a few modules it leaves out, which validate warns about) and the SDK. Clips Kitty can't install other packages yet. Test on 3.11: newer Python syntax or library calls fail there."
+                  "text": "Clips Kitty's own: Python 3.14, with the standard library (except a few modules it leaves out, which validate warns about) and the SDK. Clips Kitty can't install other packages yet. Test on 3.14: newer Python syntax or library calls fail there."
                 }
               },
               {
@@ -401,7 +401,7 @@ python -m clipskitty_sdk run quarkbloom-bursts --sample</code></pre>
           <p>
             The last command makes a 40-second test video with a red banner and a loud sound,
             runs the plugin on it the way Clips Kitty would, and prints the one moment it finds.
-            You need <strong>Python 3.11</strong>, the Python Clips Kitty runs plugins on;
+            You need <strong>Python 3.14</strong>, the Python Clips Kitty runs plugins on;
             <strong>FFmpeg</strong> on <code>PATH</code>, for the test video; and
             <strong>Git</strong>, because the SDK installs from GitHub. If you use a virtual
             environment, make it beside your plugin's folder, never inside it.
@@ -625,9 +625,9 @@ python -m clipskitty_sdk run quarkbloom-bursts --sample</code></pre>
 
           <h3>Which Python do plugins run on?</h3>
           <p>
-            Clips Kitty's own: Python 3.11, with the standard library (except a few modules it
+            Clips Kitty's own: Python 3.14, with the standard library (except a few modules it
             leaves out, which validate warns about) and the SDK. Clips Kitty can't install other
-            packages yet. Test on 3.11: newer Python syntax or library calls fail there.
+            packages yet. Test on 3.14: newer Python syntax or library calls fail there.
           </p>
 
           <h3>Which Clips Kitty runs plugins?</h3>

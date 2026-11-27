@@ -11,7 +11,7 @@
 # installing Node. Run the UI on your host against this engine — see
 # docs/DOCKER.md.
 
-FROM python:3.11-slim
+FROM python:3.14-slim
 
 # ffmpeg      — every decode, encode and probe in the pipeline
 # libgl1 etc. — OpenCV imports fail without them on slim images, with an

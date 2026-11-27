@@ -96,7 +96,7 @@ the editor. Posting isn't a plugin step: Clips Kitty posts clips itself, and
 through WoopSocial (https://woopsocial.com/?via=clipskitty) it can post to
 many sites at once on the creator's own account. Affiliate link - Clips Kitty
 may earn a commission if you sign up through it, at no extra cost to you.
-A plugin runs on Clips Kitty's own Python 3.11, with the standard
+A plugin runs on Clips Kitty's own Python 3.14, with the standard
 library (minus a few modules it leaves out) and the SDK, on the creator's PC
 with the creator's rights, like any program: Clips Kitty doesn't sandbox it,
 and its install screen shows what the plugin declares. The templates and

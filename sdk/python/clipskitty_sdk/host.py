@@ -48,11 +48,10 @@ SDK_DIR = Path(__file__).resolve().parent.parent  # the folder holding clipskitt
 
 # The Python that installed Clips Kitty runs plugins on: its engine's own,
 # frozen into the app (_clipskitty_script_host.py). This is the one place the
-# version is written. plugins/sources.py and tests/test_plugin_manager.py
-# already say "the app builds with 3.11"; scripts/build_installer.py refuses
+# version is written. scripts/build_installer.py refuses
 # to build with another minor version, the SDK's lint parses plugins with this
 # grammar, and CI's SDK (Windows) job tests on it.
-APP_PYTHON = (3, 11)
+APP_PYTHON = (3, 14)
 
 # How long a run may take when the manifest's run.timeout_minutes says
 # nothing: a run that finds moments, and one that understands or rates the

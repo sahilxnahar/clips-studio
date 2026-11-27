@@ -78,7 +78,7 @@ _DISK_ERRNOS = {errno.ENOSPC, getattr(errno, "EDQUOT", errno.ENOSPC)}
 _DISK_WINERRORS = {112, 39}  # ERROR_DISK_FULL, ERROR_HANDLE_DISK_FULL
 # No route to the server (the other connection errors are ConnectionError or TimeoutError).
 _NETWORK_ERRNOS = {errno.ENETUNREACH, errno.EHOSTUNREACH, errno.ENETDOWN}
-# A Windows junction (Path.is_junction is Python 3.12+; the app builds with 3.11).
+# A Windows junction (read by its reparse tag, which every Python version reports).
 _MOUNT_POINT = getattr(stat, "IO_REPARSE_TAG_MOUNT_POINT", 0xA0000003)
 
 

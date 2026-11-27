@@ -315,8 +315,11 @@ def test_lint_skips_tests(tmp_path):
 
 
 @pytest.mark.skipif(sys.version_info < (3, 12), reason="this Python can't read the newer syntax at all")
-def test_lint_warns_about_syntax_newer_than_clips_kittys_python(tmp_path):
-    assert host.APP_PYTHON == (3, 11)
+def test_lint_warns_about_syntax_newer_than_clips_kittys_python(tmp_path, monkeypatch):
+    # Clips Kitty runs plugins on 3.14, the newest Python there is, so no
+    # syntax is newer yet. The mechanism is checked against an older target.
+    assert host.APP_PYTHON == (3, 14)
+    monkeypatch.setattr(lint, "APP_PYTHON", (3, 11))
     assert _lint(tmp_path, {"src/main.py": "import json\n\ntype Seconds = float\n"}) == [
         ("src/main.py line 3: this needs a newer Python than Clips Kitty's (3.11): Type statement is only "
          "supported in Python 3.12 and greater")]
