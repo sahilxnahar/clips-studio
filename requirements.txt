@@ -26,7 +26,15 @@ yt-dlp-ejs==0.8.0
 # model was trained against this library's defaults, so it is not
 # interchangeable with another MFCC implementation.
 python_speech_features>=0.6,<1
+# python_speech_features imports scipy but doesn't declare it; it used to
+# arrive with other packages, and without it speaker detection fails.
+scipy>=1.18.1,<2
 faster-whisper>=1.2.1,<2
+# faster-whisper (1.2.1, the latest) opens audio with av.open(...,
+# metadata_errors=...), an argument PyAV 19 removed: every transcription
+# then fails with "unexpected keyword argument 'metadata_errors'". Raise
+# this when faster-whisper stops passing it.
+av>=18.1.1,<19
 # faster-whisper's engine (CTranslate2) is a CUDA 12 build and needs cuBLAS 12
 # on an NVIDIA GPU; PyTorch's CUDA 13 build only has cuBLAS 13. Without this,
 # Whisper falls back to the CPU (issue #111). Windows only: that's where the
